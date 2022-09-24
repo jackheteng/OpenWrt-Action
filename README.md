@@ -25,8 +25,8 @@ service ua2f enable
 service ua2f start
 ```
 
-# Manual configure
-## ipset command
+# 手动配置
+## ipset命令
 
 请确保添加此语句至开机自启
 ```bash
@@ -34,14 +34,14 @@ ipset create nohttp hash:ip,port hashsize 16384 timeout 300
 ```
 `UA2F` 运行时依赖名称为 `nohttp`，类型为 `hash:ip,port` 的 ipset
 
-## iptables rules
+## 防火墙iptables规则
 ```shell
 iptables -t mangle -N ua2f
 iptables -t mangle -A ua2f -d 10.0.0.0/8 -j RETURN
 iptables -t mangle -A ua2f -d 127.0.0.0/8 -j RETURN
 iptables -t mangle -A ua2f -d 192.168.0.0/16 -j RETURN # 不处理流向保留地址的包
-iptables -t mangle -A ua2f -p tcp --dport 443 -j RETURN
-iptables -t mangle -A ua2f -p tcp --dport 22 -j RETURN # 不处理 SSH 和 https
+iptables -t mangle -A ua2f -p tcp --dport 443 -j RETURN # 不处理 https
+iptables -t mangle -A ua2f -p tcp --dport 22 -j RETURN # 不处理 SSH
 iptables -t mangle -A ua2f -p tcp --dport 80 -j CONNMARK --set-mark 44
 iptables -t mangle -A ua2f -m connmark --mark 43 -j RETURN # 不处理标记为非 http 的流 (实验性)
 iptables -t mangle -A ua2f -m set --set nohttp dst,dst -j RETURN
