@@ -13,11 +13,16 @@
 # Uncomment a feed source
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
-# Add a feed source
-#sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
+# Add feed sources
+sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
+sed -i '$a src-git diy https://github.com/CCnut/feed-netkeeper.git;LUCI-LUA-UCITRACK' feeds.conf.default
 git clone https://github.com/CHN-beta/rkp-ipid package/rkp-ipid
 git clone https://github.com/Zxilly/UA2F package/UA2F
 
 # Add luci-theme-argon
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 rm -rf ../lean/luci-theme-argon
+
+# Svn checkout packages from immortalwrt's repository
+git clone --depth=1 https://github.com/immortalwrt/packages -b openwrt-18.06 packages
+git clone --depth=1 https://github.com/immortalwrt/luci -b openwrt-18.06 luci

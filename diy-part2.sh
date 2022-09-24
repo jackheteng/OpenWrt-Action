@@ -10,13 +10,6 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
-# CONFIG_NETFILTER=y
-# CONFIG_NETFILTER_NETLINK=y
-# CONFIG_NETFILTER_NETLINK_GLUE_CT=y
-# CONFIG_NETFILTER_NETLINK_LOG=y
-# CONFIG_NF_CONNTRACK=y
-# CONFIG_NF_CT_NETLINK=y
-
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.3.1/g' package/base-files/files/bin/config_generate
 target=$(grep "^CONFIG_TARGET" .config --max-count=1 | awk -F "=" '{print $1}' | awk -F "_" '{print $3}')
@@ -27,4 +20,5 @@ done
 
 # Add luci-theme-argon
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
+git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
 rm -rf ../lean/luci-theme-argon
