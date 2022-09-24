@@ -26,9 +26,9 @@ ipset create nohttp hash:ip,port hashsize 16384 timeout 300
 ```
 `UA2F` 运行时依赖名称为 `nohttp`，类型为 `hash:ip,port` 的 ipset
 
-<a href="https://github.com/QiYueYiya/OpenWrt-XiaoMiR3G-Action/firewall.md">防火墙规则</a><br>
+<a href="https://github.com/QiYueYiya/OpenWrt-XiaoMiR3G-Action/blob/main/firewall.md">防火墙规则</a><br>
 
-<a href="http://trac.gateworks.com/wiki/OpenWrt/kernelconfig">参考文献</a><br>
+# 参考文献
 <a href="https://sunbk201public.notion.site/sunbk201public/OpenWrt-f59ae1a76741486092c27bc24dbadc59">详细教程</a><br>
 <a href="https://github.com/Zxilly/UA2F">Zxilly/UA2F</a><br>
 
