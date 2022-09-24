@@ -26,5 +26,5 @@ do
 done
 
 # Add luci-theme-argon
-git clone --depth=1 -b https://github.com/jerrykuku/luci-theme-argon
+git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 rm -rf ../lean/luci-theme-argon
