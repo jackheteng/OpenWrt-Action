@@ -1,9 +1,3 @@
-# 食用方法：
-## aciton务必使用Main
-<br><a href="http://trac.gateworks.com/wiki/OpenWrt/kernelconfig">参考文献</a><br>
-<a href="https://sunbk201public.notion.site/sunbk201public/OpenWrt-f59ae1a76741486092c27bc24dbadc59">详细教程</a><br>
-<a href="https://github.com/Zxilly/UA2F">Zxilly/UA2F</a><br>
-
 # uci命令
 
 ```bash
@@ -48,3 +42,8 @@ iptables -t mangle -A ua2f -p tcp --dport 80 -m string --string "/mmtls/" --algo
 iptables -t mangle -A ua2f -j NFQUEUE --queue-num 10010
 iptables -t mangle -A FORWARD -p tcp -m conntrack --ctdir ORIGINAL -j ua2f
 ```
+
+<br><a href="http://trac.gateworks.com/wiki/OpenWrt/kernelconfig">参考文献</a><br>
+<a href="https://sunbk201public.notion.site/sunbk201public/OpenWrt-f59ae1a76741486092c27bc24dbadc59">详细教程</a><br>
+<a href="https://github.com/Zxilly/UA2F">Zxilly/UA2F</a><br>
+
