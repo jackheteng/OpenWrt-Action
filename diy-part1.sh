@@ -22,7 +22,3 @@ git clone https://github.com/Zxilly/UA2F package/UA2F
 # Svn checkout packages from immortalwrt's repository
 git clone --depth=1 https://github.com/immortalwrt/packages -b openwrt-18.06 packages
 git clone --depth=1 https://github.com/immortalwrt/luci -b openwrt-18.06 luci
-
-# Add luci-theme-argon
-rm -rf luci/themes/luci-theme-argon
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon luci/themes/luci-theme-argon
