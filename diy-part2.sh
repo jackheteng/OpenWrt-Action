@@ -17,7 +17,3 @@ for configFile in $(ls target/linux/$target/config*)
 do
     echo -e "\nCONFIG_NETFILTER_NETLINK_GLUE_CT=y" >> $configFile
 done
-
-# Add luci-theme-argon
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
-rm -rf ../lean/luci-theme-argon
