@@ -6,13 +6,14 @@ iptables -t mangle -A POSTROUTING -j TTL --ttl-set 64s
 iptables -t mangle -N ua2f
 iptables -t mangle -A ua2f -d 10.0.0.0/8 -j RETURN
 iptables -t mangle -A ua2f -d 127.0.0.0/8 -j RETURN
+iptables -t mangle -A ua2f -d 172.16.0.0/12 -j RETURN
 iptables -t mangle -A ua2f -d 192.168.0.0/16 -j RETURN # 不处理流向保留地址的包
 iptables -t mangle -A ua2f -p tcp --dport 443 -j RETURN # 不处理 https
 iptables -t mangle -A ua2f -p tcp --dport 22 -j RETURN # 不处理 SSH
 iptables -t mangle -A ua2f -p tcp --dport 80 -j CONNMARK --set-mark 44
 iptables -t mangle -A ua2f -m connmark --mark 43 -j RETURN # 不处理标记为非 http 的流 (实验性)
 iptables -t mangle -A ua2f -m set --set nohttp dst,dst -j RETURN
-iptables -t mangle -A ua2f -p tcp --dport 80 -m string --string "/mmtls/" --algo bm -j RETURN # 不处理微信的 mmtls
+# iptables -t mangle -A ua2f -p tcp --dport 80 -m string --string "/mmtls/" --algo bm -j RETURN # 不处理微信的 mmtls
 iptables -t mangle -A ua2f -j NFQUEUE --queue-num 10010
 iptables -t mangle -A FORWARD -p tcp -m conntrack --ctdir ORIGINAL -j ua2f
 
