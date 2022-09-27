@@ -28,14 +28,12 @@ ipset create nohttp hash:ip,port hashsize 16384 timeout 300
 ```
 `UA2F` 运行时依赖名称为 `nohttp`，类型为 `hash:ip,port` 的 ipset
 
-<a href="https://github.com/QiYueYiya/OpenWrt-XiaoMiR3G-Action/blob/main/firewall.md">防火墙规则</a><br>
-
-## 通过 iptables 修改 TTL 值
+通过 iptables 修改 TTL 值
 ```
 iptables -t mangle -A POSTROUTING -j TTL --ttl-set 64s
 ```
 
-## UA2F 防检测
+UA2F 防检测
 ```
 iptables -t mangle -N ua2f
 iptables -t mangle -A ua2f -d 10.0.0.0/8 -j RETURN
@@ -52,7 +50,7 @@ iptables -t mangle -A ua2f -j NFQUEUE --queue-num 10010
 iptables -t mangle -A FORWARD -p tcp -m conntrack --ctdir ORIGINAL -j ua2f
 ```
 
-## 通过 rkp-ipid 设置 IPID
+通过 rkp-ipid 设置 IPID
 ```
 iptables -t mangle -N IPID_MOD
 iptables -t mangle -A FORWARD -j IPID_MOD
@@ -66,7 +64,7 @@ iptables -t mangle -A IPID_MOD -d 255.0.0.0/8 -j RETURN
 iptables -t mangle -A IPID_MOD -j MARK --set-xmark 0x10/0x10
 ```
 
-## 防时钟偏移检测
+防时钟偏移检测
 ```
 iptables -t nat -N ntp_force_local
 iptables -t nat -I PREROUTING -p udp --dport 123 -j ntp_force_local
