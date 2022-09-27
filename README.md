@@ -3,8 +3,7 @@ Main.config文件中改成自己所需要编译的设备，复制别人的来用
 
 extra.config文件中是需要安装或者不安装的插件
 
-# 底包
-[先刷入固件底包](https://github.com/QiYueYiya/OpenWrt-XiaoMiR3G-Action/releases/download/initramfs-kernel/openwrt-ramips-mt7621-xiaomi_mi-router-3g-initramfs-kernel.bin)
+[固件底包](https://github.com/QiYueYiya/OpenWrt-Action/releases/download/initramfs-kernel/openwrt-ramips-mt7621-xiaomi_mi-router-3g-initramfs-kernel.bin)
 # uci命令
 
 ```bash
