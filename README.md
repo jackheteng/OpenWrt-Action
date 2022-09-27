@@ -9,14 +9,15 @@ uci set ua2f.enabled.enabled=1
 uci set ua2f.firewall.handle_fw=1
 # 处理 443 端口流量（默认关闭），443 端口出现 http 流量的概率较低
 uci set ua2f.firewall.handle_tls=1
-# 处理微信的 mmtls（默认开启）（建议关闭）
+# 处理微信的 mmtls（默认开启）（建议开启）
 uci set ua2f.firewall.handle_mmtls=1
 # 处理内网流量（默认开启），防止在访问内网服务时被检测到。（建议开启）
 uci set ua2f.firewall.handle_intranet=1
 # 应用uci修改
 uci commit ua2f
-
+# 启动ua2f开机自启
 service ua2f enable
+# 启动ua2f
 service ua2f start
 ```
 
@@ -30,7 +31,7 @@ ipset create nohttp hash:ip,port hashsize 16384 timeout 300
 
 通过 iptables 修改 TTL 值
 ```
-iptables -t mangle -A POSTROUTING -j TTL --ttl-set 64s
+iptables -t mangle -A POSTROUTING -j TTL --ttl-set 64
 ```
 
 UA2F 防检测
