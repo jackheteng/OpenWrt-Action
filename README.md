@@ -3,7 +3,7 @@ Main.config文件中改成自己所需要编译的设备，复制别人的来用
 
 extra.config文件中是需要安装或者不安装的插件
 
-[固件底包](https://github.com/QiYueYiya/OpenWrt-Action/releases/download/initramfs-kernel/openwrt-ramips-mt7621-xiaomi_mi-router-3g-initramfs-kernel.bin)
+硬路由请刷入[固件底包](https://github.com/QiYueYiya/OpenWrt-Action/releases/download/initramfs-kernel/openwrt-ramips-mt7621-xiaomi_mi-router-3g-initramfs-kernel.bin)
 # uci命令
 
 ```bash
@@ -50,7 +50,7 @@ iptables -t mangle -A ua2f -p tcp --dport 22 -j RETURN # 不处理 SSH
 iptables -t mangle -A ua2f -p tcp --dport 80 -j CONNMARK --set-mark 44
 iptables -t mangle -A ua2f -m connmark --mark 43 -j RETURN # 不处理标记为非 http 的流 (实验性)
 iptables -t mangle -A ua2f -m set --set nohttp dst,dst -j RETURN
-# iptables -t mangle -A ua2f -p tcp --dport 80 -m string --string "/mmtls/" --algo bm -j RETURN # 不处理微信的 mmtls
+iptables -t mangle -A ua2f -p tcp --dport 80 -m string --string "/mmtls/" --algo bm -j RETURN # 不处理微信的 mmtls
 iptables -t mangle -A ua2f -j NFQUEUE --queue-num 10010
 iptables -t mangle -A FORWARD -p tcp -m conntrack --ctdir ORIGINAL -j ua2f
 ```
