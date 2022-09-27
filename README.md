@@ -1,5 +1,5 @@
 # 底包
-[先刷入固件底包](https://github.com/QiYueYiya/OpenWrt-XiaoMiR3G-Action/releases/download/2022.09.26-0049/openwrt-ramips-mt7621-xiaomi_mi-router-3g-initramfs-kernel.bin)
+[先刷入固件底包](https://github.com/QiYueYiya/OpenWrt-XiaoMiR3G-Action/releases/download/initramfs-kernel/openwrt-ramips-mt7621-xiaomi_mi-router-3g-initramfs-kernel.bin)
 # uci命令
 
 ```bash
