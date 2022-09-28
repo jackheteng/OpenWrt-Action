@@ -18,7 +18,6 @@ sed -i '$a src-git kenzo https://github.com/kenzok8/small-package' feeds.conf.de
 sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
 git clone https://github.com/CHN-beta/rkp-ipid package/rkp-ipid
 git clone https://github.com/Zxilly/UA2F package/ua2f
-git clone https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk package/mentohust
 
 # Svn checkout packages from immortalwrt's repository
 git clone --depth=1 https://github.com/immortalwrt/packages -b openwrt-18.06 packages
