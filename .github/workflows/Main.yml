@@ -168,7 +168,7 @@ jobs:
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
-        echo "编译时间：{{ env.FILE_TIME }}" >> release.txt
+        echo "编译时间：${{ env.FILE_TIME }}" >> release.txt
         echo "当前版本只保存一周时间，如有需要，请自行下载备份" >> release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
