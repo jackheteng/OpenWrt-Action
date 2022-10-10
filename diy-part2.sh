@@ -12,6 +12,7 @@
 
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.3.1/g' package/base-files/files/bin/config_generate
+sed -i "s/hostname='OpenWrt'/hostname='Lenovo'/g" ./package/base-files/files/bin/config_generate
 target=$(grep "^CONFIG_TARGET" .config --max-count=1 | awk -F "=" '{print $1}' | awk -F "_" '{print $3}')
 for configFile in $(ls target/linux/$target/config*)
 do
