@@ -1,39 +1,40 @@
+# uci命令
 
-# 说明
-1 利用[P3TERX](https://github.com/P3TERX/Actions-OpenWrt)的Actions编译[ 天灵 -OpenWrt的分支](https://github.com/immortalwrt/immortalwrt)
+```bash
+# 开机自启
+uci set ua2f.enabled.enabled=1
+# 自动配置防火墙（默认开启）（建议开启）
+uci set ua2f.firewall.handle_fw=1
+# 处理 443 端口流量（默认关闭），443 端口出现 http 流量的概率较低
+uci set ua2f.firewall.handle_tls=1
+# 处理微信的 mmtls（默认开启）（建议开启）
+uci set ua2f.firewall.handle_mmtls=1
+# 处理内网流量（默认开启），防止在访问内网服务时被检测到。（建议开启）
+uci set ua2f.firewall.handle_intranet=1
+# 应用uci修改
+uci commit ua2f
+# 启动ua2f开机自启
+service ua2f enable
+# 启动ua2f
+service ua2f start
+```
 
-2 immortalwrt各分支及默认内核
+# 手动配置
 
-|  分支   |  内核  |
-|  ----  | ----  |
-| openwrt-18.06  |  默认4.19。       4.14  4.19  4.9  |
-| master  |   默认5.10。    5.10  5.15    |
-| openwrt-18.06-k5.4  |  默认5.4。       5.4  5.10   |
-| openwrt-21.02 |   默认5.4。           |
+通过 iptables 修改 TTL 值
+```
+iptables -t mangle -A POSTROUTING -j TTL --ttl-set 64
+```
 
-3 .github/workflows/Build.yml的env参数说明
-
-|  环境变量   | 功能  |
-|  ----  | ----  |
-| REPO_URL  | 源码仓库地址 |
-| REPO_BRANCH  | 源码的分支 |
-| FEEDS_CONF | 自定义feeds.conf.default文件名 |
-| CONFIG_FILE  | 自定义.config文件名 |
-| DIY_P1_SH  | 自定义第一个shell脚本，一般用于安装依赖和插件。比如openclash、ssrp+。注意脚本中引用的依赖，如果上游依赖有问题会导致编译不成功 |
-| DIY_P2_SH  | 自定义第二个shell脚本，一般用于设置themen、ip之类的。这个脚本影响的是你的页面样式、访问ip等，编译完成后需要先看里面的配置再访问 |
-| UPLOAD_BIN_DIR | 上传 bin 目录。即包含所有 ipk 文件和固件的目录。默认false |
-| UPLOAD_FIRMWARE | 上传固件目录。默认true |
-| UPLOAD_COWTRANSFER | 上传固件到奶牛快传。默认false |
-| UPLOAD_WERANSFER | 上传固件到 WeTransfer 。默认false |
-|UPLOAD_RELEASE | 上传固件到 releases 。默认false |
-| TZ  | 时区，基本不用关注。默认采用中国上海的时区。 |
-
-## 其他：
-- 《[拉取插件命令和各种命令的简单介绍](https://github.com/cddcx/immortalwrt-OpenWrt/blob/main/%E8%AF%B4%E6%98%8E/ming.md)》
-- 《[IPV4/IPV6选择](https://github.com/cddcx/immortalwrt-OpenWrt/blob/main/%E8%AF%B4%E6%98%8E/ip.md)》
-- 《[X86编译时选固件格式和设置overlay空间容量](https://github.com/cddcx/immortalwrt-OpenWrt/blob/main/%E8%AF%B4%E6%98%8E/overlay.md)》
-
-## 鸣谢
-> [`Tianling Shen`](https://github.com/immortalwrt/immortalwrt)
-> [`P3TERX`](https://github.com/P3TERX/Actions-OpenWrt)
-> [`感谢各位大佬！`](#/README.md)
+防时钟偏移检测
+```
+iptables -t nat -N ntp_force_local
+iptables -t nat -I PREROUTING -p udp --dport 123 -j ntp_force_local
+iptables -t nat -A ntp_force_local -d 0.0.0.0/8 -j RETURN
+iptables -t nat -A ntp_force_local -d 127.0.0.0/8 -j RETURN
+iptables -t nat -A ntp_force_local -d 192.168.0.0/16 -j RETURN
+iptables -t nat -A ntp_force_local -s 192.168.0.0/16 -j DNAT --to-destination 192.168.1.1
+```
+# 参考文献
+<a href="https://sunbk201public.notion.site/sunbk201public/OpenWrt-f59ae1a76741486092c27bc24dbadc59">详细教程</a><br>
+<a href="https://github.com/Zxilly/UA2F">Zxilly/UA2F</a><br>
