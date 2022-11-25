@@ -19,7 +19,7 @@ service ua2f enable
 service ua2f start
 ```
 
-# 手动配置
+# 防火墙配置
 
 通过 iptables 修改 TTL 值
 ```
@@ -38,3 +38,4 @@ iptables -t nat -A ntp_force_local -s 192.168.0.0/16 -j DNAT --to-destination 19
 # 参考文献
 <a href="https://sunbk201public.notion.site/sunbk201public/OpenWrt-f59ae1a76741486092c27bc24dbadc59">详细教程</a><br>
 <a href="https://github.com/Zxilly/UA2F">Zxilly/UA2F</a><br>
+<a href="https://github.com/P3TERX/Actions-OpenWrt">P3TERX/Actions-OpenWrt</a><br>
