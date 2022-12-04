@@ -22,9 +22,9 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: config/x86_64.config
-  DIY_P1_SH: scripts/x86_64-diy1.sh
-  DIY_P2_SH: scripts/x86_64-diy2.sh
+  CONFIG_FILE: x86_64/main.config
+  DIY_P1_SH: x86_64/diy1.sh
+  DIY_P2_SH: x86_64/diy2.sh
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
@@ -74,6 +74,7 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        cat x86_64/extra.config >> openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH

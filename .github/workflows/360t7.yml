@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: OpenWrt-X86
+name: OpenWrt-R3G
 
 on:
   workflow_dispatch:
@@ -22,9 +22,9 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: config/x86.config
-  DIY_P1_SH: scripts/x86-diy1.sh
-  DIY_P2_SH: scripts/x86-diy2.sh
+  CONFIG_FILE: 360t7/main.config
+  DIY_P1_SH: 360t7/diy1.sh
+  DIY_P2_SH: 360t7/diy2.sh
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
@@ -119,8 +119,7 @@ jobs:
         rm -rf feeds.buildinfo
         rm -rf version.buildinfo
         rm -rf profiles.json
-        rm -rf *rootfs*
-        rm -rf *kernel*
+        rm -rf *rootfs.img
         rm -rf *.manifest
         rm -rf sha256sums
         rm -rf packages
@@ -152,7 +151,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: OpenWrt-X86
+        name: OpenWrt-R3G
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
