@@ -23,7 +23,7 @@ service ua2f start
 
 通过 iptables 修改 TTL 值
 ```
-iptables -t mangle -A POSTROUTING -j TTL --ttl-set 64
+iptables -t mangle -A POSTROUTING -j TTL --ttl-set 128
 ```
 
 防时钟偏移检测
