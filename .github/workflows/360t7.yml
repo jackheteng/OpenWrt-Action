@@ -1,3 +1,13 @@
+#
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+
 name: OpenWrt-360T7
 
 on:
@@ -5,14 +15,18 @@ on:
     inputs:
       manual:
         description: '手动触发一次编译'
+  # schedule:
+  #   - cron: 0 16 * * 0
 
 env:
   REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
   REPO_BRANCH: openwrt-21.02
+  FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: 360t7/main.config
   DIY_P1_SH: 360t7/diy1.sh
   DIY_P2_SH: 360t7/diy2.sh
   UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -23,7 +37,7 @@ jobs:
     - name: 检查项目分支
       uses: actions/checkout@main
 
-    - name: 安装编译环境
+    - name: 初始化编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -42,27 +56,25 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         
-    - name: 加载自定义设置（DIY1）
+    - name: 加载自定义源
       run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
         
-    - name: 安装并更新插件
+    - name: 更新自定义源
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         ./scripts/feeds install -a
         
-    - name: 加载files和.config
+    - name: 更改设置
       run: |        
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         cat 360t7/extra.config >> openwrt/.config
-        
-    - name: 更改设置（DIY2）
-      run: |
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
@@ -92,14 +104,14 @@ jobs:
         rm -rf packages
         rm -rf feeds.buildinfo
         rm -rf version.buildinfo
-        rm -rf *kernel.bin
         rm -rf profiles.json
-        rm -rf *rootfs.img
+        rm -rf *rootfs*
+        rm -rf *kernel*
         rm -rf *.manifest
         rm -rf sha256sums
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         
-    - name: 上传固件到github
+    - name: 上传固件Github Action空间
       uses: actions/upload-artifact@main
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
