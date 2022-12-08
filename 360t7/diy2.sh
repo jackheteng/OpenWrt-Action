@@ -13,7 +13,7 @@
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.3.1/g' package/base-files/files/bin/config_generate
 sed -i "s/hostname='ImmortalWrt'/hostname='Lenovo'/g" package/base-files/files/bin/config_generate
-sed -i "s/DISTRIB_DESCRIPTION=.*/DISTRIB_DESCRIPTION='OpenWrt By QiYueYi@$FILE_DATE'/g" package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_DESCRIPTION=.*/DISTRIB_DESCRIPTION='OpenWrt By QiYueYi@$(date +"%Y%m%d")'/g" package/base-files/files/etc/openwrt_release
 for configFile in $(ls target/linux/mediatek/mt7981/config*)
 do
     echo -e "\nCONFIG_NETFILTER_NETLINK_GLUE_CT=y" >> $configFile
