@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: OpenWrt-X86_64-UA2F
+name: OpenWrt-X86_64_u
 
 on:
   workflow_dispatch:
